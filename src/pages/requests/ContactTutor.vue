@@ -1,33 +1,47 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="form-control">
-      <label for="email"></label>
-      <input type="text" id="email" name="email" v-model.trim:value="email" />
-    </div>
-    <div class="form-control">
-      <label for="message"></label>
-      <textarea
-        name="message"
-        id="message"
-        rows="5"
-        v-model.trim:value="message"
-      ></textarea>
-    </div>
-    <p class="errors" v-if="!formIsValid.val">
-      Inserire una email valida e un messaggio che non sia vuoto.
-    </p>
-    <div class="actions">
-      <BaseButton>Invia Messaggio</BaseButton>
-    </div>
-  </form>
+  <BaseCard>
+    <form @submit.prevent="submitForm">
+      <div class="form-control">
+        <label for="email"></label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder="Inserisci la tua email..."
+          v-model.trim:value="email"
+        />
+      </div>
+      <div class="form-control">
+        <label for="message"></label>
+        <textarea
+          name="message"
+          id="message"
+          rows="5"
+          v-model.trim:value="message"
+          placeholder="Inserisci il tuo messagio..."
+        ></textarea>
+      </div>
+      <p class="errors" v-if="!formIsValid.val">
+        Inserire una email valida e un messaggio che non sia vuoto.
+      </p>
+      <div class="actions">
+        <BaseButton>Invia Messaggio</BaseButton>
+      </div>
+    </form>
+  </BaseCard>
 </template>
 
 <script setup>
 import BaseButton from '../../components/UI/BaseButton.vue';
+import BaseCard from '../../components/UI/BaseCard.vue';
 import { ref, reactive } from 'vue';
 import { useTutorsStore } from '../../stores';
+import { useRoute } from 'vue-router';
+import { router } from '../../router';
 
 const tutorsStore = useTutorsStore();
+
+const route = useRoute();
 
 const email = ref('');
 const message = ref('');
@@ -46,15 +60,16 @@ const submitForm = () => {
   }
   const newRequest = {
     id: new Date().toISOString(),
-    coachId: 't4',
+    coachId: route.params.id,
     userEmail: email.value,
     userMessage: message.value,
   };
   console.log(newRequest);
   tutorsStore.addRequest(newRequest);
   console.log('Richiesta inviata');
-  console.log(tutorsStore.requests);
+  console.log(...tutorsStore.requests);
   console.log('Richiesta aggiunta');
+  router.replace('/tutors');
 };
 </script>
 

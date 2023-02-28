@@ -19,16 +19,18 @@
         :title="area"
       ></BaseBadge>
       <p>{{ selectedTutor.description }}</p>
+      <header>
+        <h3>Ti interessa? Chiama ora!</h3>
+        <BaseButton @click="messageFormIsVisible.val = true"
+          >Contatta</BaseButton
+        >
+      </header>
     </BaseCard>
   </section>
   <section>
-    <BaseCard>
-      <header>
-        <h2>Ti interessa? Chiama ora!</h2>
-        <BaseButton link :to="contactLink">Contatta</BaseButton>
-      </header>
-      <router-view></router-view>
-    </BaseCard>
+    <router-view>
+      <ContactTutor v-if="messageFormIsVisible.val"></ContactTutor>
+    </router-view>
   </section>
 </template>
 
@@ -38,15 +40,16 @@ import BaseCard from '../../components/UI/BaseCard.vue';
 import BaseButton from '../../components/UI/BaseButton.vue';
 
 import { useTutorsStore } from '../../stores';
-import { useRoute } from 'vue-router';
+import ContactTutor from '../requests/ContactTutor.vue';
+import { reactive } from 'vue';
 
 const tutorsStore = useTutorsStore();
 const selectedTutor = tutorsStore.tutors.find((tutor) => tutor.id === props.id);
 
+const messageFormIsVisible = reactive({ val: false });
+
 const props = defineProps({ id: String });
 const tutorFullName = `${selectedTutor.firstName} ${selectedTutor.lastName}`;
-const route = useRoute();
-const contactLink = `${route.path}/contact`;
 </script>
 
 <style scoped>

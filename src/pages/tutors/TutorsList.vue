@@ -6,17 +6,21 @@
   <section>
     <BaseCard>
       <div class="controls">
-        <BaseButton mode="outline">Aggiorna</BaseButton>
+        <BaseButton mode="outline" @click="tutorsStore.loadTutors"
+          >Aggiorna</BaseButton
+        >
         <BaseButton
-          v-if="!tutorsStore.isTutor"
+          v-if="!tutorsStore.isTutor && !tutorsStore.isLoading"
           mode="tutor-login"
           link
           to="register"
           >Accedi come Tutor</BaseButton
         >
       </div>
-
-      <ul v-if="tutorsStore.hasTutors">
+      <div v-if="tutorsStore.isLoading">
+        <BaseSpinner />
+      </div>
+      <ul v-else-if="tutorsStore.hasTutors">
         <TutorItem
           v-for="tutor in tutorsStore.filteredTutors"
           :key="tutor.id"
@@ -38,8 +42,11 @@ import TutorFilter from '../../components/TutorFilter.vue';
 import BaseButton from '../../components/UI/BaseButton.vue';
 import BaseCard from '../../components/UI/BaseCard.vue';
 import { useTutorsStore } from '../../stores';
+import { onBeforeMount } from 'vue';
+import BaseSpinner from '../../components/UI/BaseSpinner.vue';
 
 const tutorsStore = useTutorsStore();
+onBeforeMount(tutorsStore.loadTutors);
 </script>
 
 <style scoped>

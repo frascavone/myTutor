@@ -14,7 +14,7 @@
       <BaseButton mode="outline" link :to="tutorDetailsLink"
         >Dettagli</BaseButton
       >
-      <BaseButton link :to="tutorContactLink">Contatta</BaseButton>
+      <!-- <BaseButton link :to="tutorContactLink">Contatta</BaseButton> -->
     </div>
   </li>
 </template>
@@ -63,7 +63,7 @@ div {
 
 .actions {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 2.5rem;
 }
 .tutor {

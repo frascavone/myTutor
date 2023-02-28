@@ -2,7 +2,7 @@
   <form
     @submit.prevent="
       submitForm({
-        id: userId,
+        // id: userId,
         firstName: firstName.val,
         lastName: lastName.val,
         description: description.val,
@@ -114,7 +114,7 @@ import { useTutorsStore } from '../../stores';
 import { reactive } from 'vue';
 const tutorsStore = useTutorsStore();
 
-const userId = tutorsStore.userId;
+// const userId = `t${tutorsStore.tutors.length + 1}`;
 const firstName = reactive({ val: '', isValid: true });
 const lastName = reactive({ val: '', isValid: true });
 const description = reactive({ val: '', isValid: true });
@@ -156,6 +156,9 @@ const submitForm = (data) => {
   if (!formIsValid.val) return;
   tutorsStore.addTutor(data);
   tutorsStore.tutorAdded = true;
+  setTimeout(() => {
+    tutorsStore.tutorAdded = false;
+  }, 3000);
 };
 </script>
 

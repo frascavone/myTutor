@@ -36,4 +36,12 @@ export default {
 .geografia {
   color: #008d59;
 }
+
+.matematica {
+  color: blue;
+}
+
+.scienze {
+  color: yellow;
+}
 </style>

@@ -1,0 +1,39 @@
+<template>
+  <li>
+    <div>
+      <a :href="emailLink">{{ email }}</a>
+    </div>
+    <p>{{ message }}</p>
+  </li>
+</template>
+
+<script setup>
+const props = defineProps({
+  email: { type: String },
+  message: { type: String },
+});
+const emailLink = `mailto:${props.email}`;
+</script>
+
+<style scoped>
+li {
+  margin: 1rem 0;
+  border: 1px solid #ccc;
+  padding: 1rem;
+}
+
+a {
+  color: #155799;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover,
+a:active {
+  color: #6dd5ed;
+}
+
+p {
+  margin: 0.5rem 0 0 0;
+}
+</style>
